@@ -16,7 +16,10 @@ describe('Auth Controller', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [UserModule, TypeOrmModule.forRoot()],
+      imports: [
+        UserModule,
+        TypeOrmModule.forRoot({ keepConnectionAlive: true }),
+      ],
       controllers: [AuthController],
       components: [AuthService],
     }).compile();
@@ -76,6 +79,7 @@ describe('Auth Controller', () => {
       expect(refreshResult.token.accessToken).not.toEqual(loginAccessToken);
       expect(refreshResult.token.refreshToken).not.toEqual(loginRefreshToken);
     } catch (ex) {
+      console.log('EXCEPTION!!!!!!!!!!\n' + ex);
       expect(ex).toBeUndefined();
     }
   });

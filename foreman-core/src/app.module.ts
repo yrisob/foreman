@@ -11,9 +11,18 @@ import { CommodityCategoryController } from './commodity-category/commodity-cate
 import { CommodityCategoryService } from './commodity-category/commodity-category.service';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), AuthModule],
-  controllers: [AppController, CommodityController, CommodityCategoryController],
-  providers: [AppService, UserAuthenticationService, CommodityService, CommodityCategoryService],
+  imports: [TypeOrmModule.forRoot({ keepConnectionAlive: true }), AuthModule],
+  controllers: [
+    AppController,
+    CommodityController,
+    CommodityCategoryController,
+  ],
+  providers: [
+    AppService,
+    UserAuthenticationService,
+    CommodityService,
+    CommodityCategoryService,
+  ],
 })
 export class AppModule {
   constructor(private readonly connection: Connection) {}

@@ -1,22 +1,23 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CommodityController } from './commodity.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { AuthModule } from '../auth/auth.module';
 import { CommodityService } from './commodity.service';
 import { CommodityCategoryController } from '../commodity-category/commodity-category.controller';
-import { doesNotThrow } from 'assert';
+
 import { CommodityCategoryService } from '../commodity-category/commodity-category.service';
 import { CommodityCategory } from '../entity/commodity_category.entity';
 import { CommodityDTO } from '../dto/commodity.dto';
 import { Commodity } from '../entity/commodity.entity';
+import { readFileSync } from 'fs';
+import { AppModule } from '../app.module';
 
 describe('Product Controller', () => {
   let commodityController: CommodityController;
   let categoryController: CommodityCategoryController;
-
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [TypeOrmModule.forRoot(), AuthModule],
+      imports: [AppModule],
       controllers: [CommodityController, CommodityCategoryController],
       providers: [CommodityService, CommodityCategoryService],
     }).compile();
