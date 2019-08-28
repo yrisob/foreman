@@ -1,0 +1,19 @@
+.cursor_pointer {
+    cursor: pointer;
+}
+
+.login-form {
+    width: 80%
+}
+
+.without-padding {
+    padding: 0 !important;
+}
+
+.uppercase {
+    text-transform: uppercase
+}
+
+.lighttheme-text {
+    color: #757575;
+}
