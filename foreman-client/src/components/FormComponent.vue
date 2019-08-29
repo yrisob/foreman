@@ -43,7 +43,6 @@
             <v-btn
               :key="index + 'btn'"
               :class="button.class"
-              outlined
               @click="button.exec"
             >
               {{ button.name }}

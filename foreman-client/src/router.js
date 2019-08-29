@@ -2,7 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import About from './views/About.vue'
-import Login from './views/Login.vue'
+import Login from './views/auth/Login.vue'
+import Registration from './views/auth/Registation.vue'
+import RepairPassword from './views/auth/PasswordRepair.vue'
+import ResetPassowrd from './views/auth/ResetPassword.vue'
 
 Vue.use(Router)
 
@@ -17,18 +20,36 @@ export default new Router({
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: About
   },
   {
     path: '/login',
     name: 'login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: Login
+  },
+  {
+    path: '/registration',
+    name: 'registration',
+    component: Registration,
+    props: route => ({
+      email: route.query.email
+    })
+  },
+  {
+    path: '/repairpassword',
+    name: 'repairpassword',
+    component: RepairPassword,
+    props: route => ({
+      email: route.query.email
+    })
+  },
+  {
+    path: '/resetpassword',
+    name: 'resetpassword',
+    component: ResetPassowrd,
+    props: route => ({
+      repairToken: route.query.repairToken
+    })
   }
   ]
 })
