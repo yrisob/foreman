@@ -58,14 +58,23 @@ export default {
       }],
       loginButtons: [{
         name: 'Войти',
-        class: 'col-md-2 col-xs-10  offset-md-1 offset-xs-1 caption v-btn--outlined',
+        class: 'col-md-2 col-xs-10  offset-md-1 offset-xs-1 caption small v-btn--outlined',
+        disabled: true,
         exec: () => { this.login() }
       },
       {
         name: 'Зарегистироваться',
-        class: 'col-md-4 offset-md-4  col-xs-10 offset-xs-1 caption v-btn--flat v-btn--text',
+        class: 'col-md-4 offset-md-4  col-xs-10 offset-xs-1 caption v-btn--flat small v-btn--text',
         exec: () => { this.registrate() }
       }]
+    }
+  },
+  watch: {
+    loginFields: {
+      handler: function (newValue) {
+        this.loginButtons[0].disabled = !newValue[0].value || !newValue[1].value
+      },
+      deep: true
     }
   },
   methods: {
@@ -73,8 +82,12 @@ export default {
       const queryParmas = this.loginFields[0].value ? `?email=${this.loginFields[0].value}` : ''
       this.$router.push(`/registration${queryParmas}`)
     },
-    login () {
-      console.log('loging in..')
+    async login () {
+      console.log('component loging in..')
+      const success = await this.$store.dispatch('LOGIN', { email: this.loginFields[0].value, password: this.loginFields[1].value })
+      if (success) {
+        console.log(this.$store.getters.GET_USER)
+      }
     },
     resetPassword () {
       const queryParmas = this.loginFields[0].value ? `?email=${this.loginFields[0].value}` : ''

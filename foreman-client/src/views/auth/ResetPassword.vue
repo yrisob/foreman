@@ -56,7 +56,8 @@ export default {
         counter: 0,
         rule: [
           v => !!v || 'Требуется повторение пароля',
-          v => v.length > 6 || 'пароль должен быть более 6 символов'
+          v => v.length > 6 || 'пароль должен быть более 6 символов',
+          v => v === this.repairFields[0].value || 'повторение пароля должно совпадать с паролем'
         ]
       }],
       repairButtons: [{
@@ -72,6 +73,11 @@ export default {
     }
   },
   methods: {
+    setErrorMessage () {
+      if (this.repairFields && this.repairFields[1].value && this.repairFields[0].value && this.repairFields[1].value === this.repairFields[0].value) {
+        this.repairFields[1].errorMessage = 'повторение пароля должно совпадать с паролем'
+      }
+    },
     setPassword () {
       console.log('set password, send new password and repairToken for checking access for this action ....')
     },

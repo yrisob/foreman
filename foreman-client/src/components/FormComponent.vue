@@ -44,6 +44,7 @@
               :key="index + 'btn'"
               :class="button.class"
               @click="button.exec"
+              :disabled="button.disabled"
             >
               {{ button.name }}
             </v-btn>

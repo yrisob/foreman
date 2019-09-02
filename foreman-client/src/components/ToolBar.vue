@@ -8,8 +8,8 @@
       <span class="font-weight-light">{{ second_part }}</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-btn text to="about">
-      <span class="mr-2">Latest Release</span>
+    <v-btn text to="login">
+      <span class="mr-2">{{ getUserData ? "выйти" : "войти" }}</span>
     </v-btn>
   </v-app-bar>
 </template>
@@ -21,6 +21,13 @@ export default {
     first_part: 'Vuetify',
     second_part: 'MATERIAL DESIGN'
   }),
+  computed: {
+    getUserData () {
+      const userInfo = this.$store.getters.GET_USER
+      return !!userInfo
+    }
+
+  },
   methods: {
     goToMainPage () {
       this.$router.push('/', () => {})
