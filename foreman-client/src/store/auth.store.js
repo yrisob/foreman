@@ -114,6 +114,20 @@ const authStore = {
       } catch (ex) {
         throwException(ex)
       }
+    },
+    LOGOUT: async ({
+      commit
+    }) => {
+      console.log('logout operation ...........')
+      try {
+        authApi.logout(Cookies.get('refreshToken'))
+        commit('LOGIN', {
+          accessToken: undefined,
+          refreshToken: undefined
+        })
+      } catch (ex) {
+        throwException(ex)
+      }
     }
   }
 }

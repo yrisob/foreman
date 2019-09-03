@@ -72,7 +72,10 @@ export default {
   watch: {
     loginFields: {
       handler: function (newValue) {
-        this.loginButtons[0].disabled = !newValue[0].value || !newValue[1].value
+        this.loginButtons[0].disabled = !newValue[0].value ||
+                                        !/.+@.+/.test(newValue[0].value) ||
+                                        !newValue[1].value ||
+                                        newValue[1].value <= 6
       },
       deep: true
     }
@@ -87,6 +90,7 @@ export default {
       const success = await this.$store.dispatch('LOGIN', { email: this.loginFields[0].value, password: this.loginFields[1].value })
       if (success) {
         console.log(this.$store.getters.GET_USER)
+        this.$router.push({ path: '/' })
       }
     },
     resetPassword () {

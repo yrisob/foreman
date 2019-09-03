@@ -90,7 +90,8 @@ export default {
       registrationButtons: [{
         name: 'Регистрация',
         class: 'col-md-3 col-xs-10  offset-md-1 offset-xs-1 caption v-btn--outlined',
-        exec: () => { this.registrate() }
+        exec: () => { this.registrate() },
+        disabled: true
       },
       {
         name: 'На главную',
@@ -106,9 +107,32 @@ export default {
       }
     })
   },
+  watch: {
+    registrationFields: {
+      handler: function (newValue) {
+        this.registrationButtons[0].disabled = !newValue[0].value.length ||
+                                               !newValue[0].value.length <= 2 ||
+                                               !newValue[1].value ||
+                                               !/.+@.+/.test(newValue[1].value) ||
+                                               !newValue[2].value ||
+                                               !newValue[2].value !== 12 ||
+                                               !newValue[3].value ||
+                                               !newValue[3].value.length <= 6
+      },
+      deep: true
+    }
+  },
   methods: {
-    registrate () {
-      console.log('call registrate api')
+    async registrate () {
+      const success = await this.$store.dispatch('REGISTRATION', {
+        name: this.registrationFields[0].value,
+        email: this.registrationFields[1].value,
+        phone: this.registrationFields[2].value,
+        password: this.registrationFields[3].value
+      })
+      if (success) {
+        this.$router.push({ path: '/' })
+      }
     },
     openOfferta () {
       console.log('октрытие оферты сервиса')
@@ -117,6 +141,5 @@ export default {
       this.$router.push({ path: '/' })
     }
   }
-
 }
 </script>

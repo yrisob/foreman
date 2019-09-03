@@ -98,4 +98,18 @@ export class AuthController {
       throw new BadRequestException('refreshToken does not exist');
     }
   }
+
+  @Post('logout')
+  public async logout(@Body() refreshToken: string) {
+    const user = jwt.verify(refreshToken, Config.jwtRefreshTokenSecretKey);
+    if (user && user.email) {
+      const userAuth = await this.userAuthentication.findByToken(refreshToken);
+      if (userAuth.id) {
+        return this.userAuthentication.delete(userAuth.id);
+      } else {
+        throw new BadRequestException('can not find refresh token');
+      }
+    }
+    throw new BadRequestException('refreshToken does not exist');
+  }
 }

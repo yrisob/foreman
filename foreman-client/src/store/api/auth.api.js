@@ -13,6 +13,10 @@ class AuthApi {
   refreshToken (refreshToken) {
     return apiInstance.post(`${prefix}/refreshtoken`, refreshToken)
   }
+
+  logout (refreshToken) {
+    return apiInstance.post(`${prefix}/logout`, refreshToken)
+  }
 }
 const authApi = new AuthApi()
 export default authApi
